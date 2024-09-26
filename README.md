@@ -11,7 +11,7 @@ git clone --recurse-submodules https://github.com/light-eurecom/light-production
 `cd light-core` and create the environment file:
 
 ```bash
-cp env.example env.development
+cp env.example env.production
 ```
 
 Update it accordingly:
