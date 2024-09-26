@@ -1,20 +1,34 @@
-version: "3"
+# This docker-compose file:
+# - creates the next app image/container
+# - create the flask app image/container
+# - exposes the nextjs app (frontend or website)
+# - allows the nextjs app to communicate with flask app only using internal docker network
 
+version: '3.8'
 services:
-  api:
-    build: api
-    command: "flask run -h 0.0.0.0 -p 5000"
-    environment:
-      - FLASK_DEBUG=false
-      - FLASK_APP=app/app.py
-    ports:
-      - "5000:5000"
-
-  client:
-    build: client
+  light-web:
+    hostname: light-web
+    build:
+      context: ./light-website
+      dockerfile: Dockerfile.prod
     ports:
       - "3000:3000"
-    links:
-      - api
+    networks:
+      - internal_network
     depends_on:
-      - api
+      - light-api
+    env_file:
+      - ./light-website/.env.production # Specify the path to the env file
+
+  light-api:
+    hostname: light-api
+    build:
+      context: ./light-core
+      dockerfile: Dockerfile.prod
+    networks:
+      - internal_network
+    ports:
+      - "5002:5002" 
+networks:
+  internal_network:
+    driver: bridge

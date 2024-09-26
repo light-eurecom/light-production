@@ -1,0 +1,6 @@
+[submodule "light-website"]
+	path = light-website
+	url = https://github.com/light-eurecom/light-website
+[submodule "light-core"]
+	path = light-core
+	url = https://github.com/light-eurecom/light-core
